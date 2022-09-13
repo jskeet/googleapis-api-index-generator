@@ -23,6 +23,8 @@ install_protoc
 rm -rf tmp
 mkdir tmp
 
+date
+echo "Generating options file"
 echo "-I$PROTOBUF_ROOT/include" > tmp/protoc-options.txt
 echo "-I$GOOGLEAPIS" >> tmp/protoc-options.txt
 echo "--include_imports" >> tmp/protoc-options.txt
@@ -31,11 +33,13 @@ echo "--experimental_allow_proto3_optional" >> tmp/protoc-options.txt
 find $GOOGLEAPIS/google -name '*.proto' >> tmp/protoc-options.txt
 find $GOOGLEAPIS/grafeas -name '*.proto' >> tmp/protoc-options.txt
 
+date
 echo "Generating descriptor set."
 # Generate the descriptor set, but ignore import warnings (and
 # ignore the exit code of grep).
 $PROTOC @tmp/protoc-options.txt > tmp/protoc-output.txt 2>&1
 cat tmp/protoc-output.txt | grep -v -E "Import [^ ]* is unused." || true
+date
 
 # Arguments to generator:
 # - Descriptor set
