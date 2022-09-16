@@ -44,11 +44,11 @@ internal class EnumChangeDetector : IHistoryProcessor
                     IntroducedTimestamp = entry.Timestamp,
                     MinValues = count,
                     MaxValues = count,
-                    CurrentValues = count
+                    Values = enumDefinition.Values.Select(def => def.Name).ToList()
                 });
-                if (enumEntry.CurrentValues != count)
+                if (enumEntry.Values.Count != count)
                 {
-                    enumEntry.CurrentValues = count;
+                    enumEntry.Values = enumDefinition.Values.Select(def => def.Name).ToList();
                     enumEntry.MaxValues = Math.Max(count, enumEntry.MaxValues);
                     enumEntry.MinValues = Math.Min(count, enumEntry.MinValues);
                     enumEntry.Changes++;
@@ -83,8 +83,5 @@ public class EnumHistoryEntry
     public int MinValues { get; set; }
     public int MaxValues { get; set; }
     public int Changes { get; set; }
-
-    [JsonIgnore]
-    public int CurrentValues { get; set; }
+    public List<string> Values { get; set; }
 }
-

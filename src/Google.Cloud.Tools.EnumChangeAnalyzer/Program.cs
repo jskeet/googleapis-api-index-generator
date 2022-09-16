@@ -31,6 +31,7 @@ var entries = JsonConvert.DeserializeObject<List<EnumHistoryEntry>>(json, settin
 
 var groupedByApi = entries.GroupBy(entry => ExtractApiName(entry.FullName))
     .Where(g => g.Key is not null)
+    .OrderBy(g => g.Key)
     .ToList();
 
 Console.WriteLine($"API: unchanged / changed");
@@ -47,6 +48,16 @@ foreach (var group in groupedByApi)
 }
 Console.WriteLine($"Total APIs: {groupedByApi.Count} of which {totalWithChanges} had changes to enums");
 Console.WriteLine($"Total enums: {groupedByApi.Sum(g => g.Count())} of which {groupedByApi.Sum(g => g.Count(e => e.Changes != 0))} had changes");
+Console.WriteLine();
+Console.WriteLine("Enums with changes:");
+foreach (var group in groupedByApi)
+{
+    foreach (var entry in group.Where(e => e.Changes != 0))
+    {
+        Console.WriteLine($"{entry.FullName}: {string.Join(", ", entry.Values)}");
+    }
+}
+
 
 return 0;
 

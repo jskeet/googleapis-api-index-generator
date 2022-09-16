@@ -26,6 +26,5 @@ public class EnumHistoryEntry
     public int MaxValues { get; set; }
     public int Changes { get; set; }
 
-    [JsonIgnore]
-    public int CurrentValues { get; set; }
+    public List<string> Values { get; set; }
 }
