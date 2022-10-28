@@ -40,10 +40,10 @@ Console.WriteLine($"Index contains {historyIndex.Count} entries, with {historyIn
 
 var timestampPattern = InstantPattern.General;
 
-IHistoryProcessor processor = new EnumChangeDetector(historyDirectory);
-processor.ProcessHistory(LoadHistoryEntries());
+IHistoryProcessor processor = new EmptyMessageDetector(historyDirectory);
+processor.ProcessHistory(LoadHistoryEntries(processor.ExtensionRegistry));
 
-IEnumerable<HistoryEntry> LoadHistoryEntries()
+IEnumerable<HistoryEntry> LoadHistoryEntries(ExtensionRegistry registry)
 {
     foreach (var historyIndexEntry in historyIndex)
     {
@@ -57,7 +57,7 @@ IEnumerable<HistoryEntry> LoadHistoryEntries()
         var fileDescriptorSet = FileDescriptorSet.Parser.ParseFrom(fileDescriptorSetStream);
         // TODO: This will be horribly inefficient... see just how bad it is.
         var descriptorByteStrings = fileDescriptorSet.File.Select(proto => proto.ToByteString());
-        var allDescriptors = FileDescriptor.BuildFromByteStrings(descriptorByteStrings, null)
+        var allDescriptors = FileDescriptor.BuildFromByteStrings(descriptorByteStrings, registry)
             .ToList()
             .AsReadOnly();
         var historyEntry = new HistoryEntry(historyIndexEntry.Sha, historyIndexEntry.Timestamp, allDescriptors);

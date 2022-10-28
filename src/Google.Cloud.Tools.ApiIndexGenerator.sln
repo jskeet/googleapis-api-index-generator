@@ -7,11 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Google.Cloud.Tools.ApiIndex
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Google.Cloud.Tools.ApiIndexGenerator", "Google.Cloud.Tools.ApiIndexGenerator\Google.Cloud.Tools.ApiIndexGenerator.csproj", "{A7573776-3712-4D1F-8010-AF3024F44CD2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Google.Cloud.Tools.ApiHistory", "Google.Cloud.Tools.ApiHistory\Google.Cloud.Tools.ApiHistory.csproj", "{8D101E56-12B0-401E-A7FB-E749845530DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Google.Cloud.Tools.ApiHistory", "Google.Cloud.Tools.ApiHistory\Google.Cloud.Tools.ApiHistory.csproj", "{8D101E56-12B0-401E-A7FB-E749845530DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Google.Cloud.Tools.ApiHistoryReader", "Google.Cloud.Tools.ApiHistoryReader\Google.Cloud.Tools.ApiHistoryReader.csproj", "{0FE0B082-6202-42D9-A05D-0EE5021A7E9F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Google.Cloud.Tools.ApiHistoryReader", "Google.Cloud.Tools.ApiHistoryReader\Google.Cloud.Tools.ApiHistoryReader.csproj", "{0FE0B082-6202-42D9-A05D-0EE5021A7E9F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Google.Cloud.Tools.EnumChangeAnalyzer", "Google.Cloud.Tools.EnumChangeAnalyzer\Google.Cloud.Tools.EnumChangeAnalyzer.csproj", "{4A4AEF96-3FBE-454F-A868-1B9B36556F83}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Google.Cloud.Tools.EnumChangeAnalyzer", "Google.Cloud.Tools.EnumChangeAnalyzer\Google.Cloud.Tools.EnumChangeAnalyzer.csproj", "{4A4AEF96-3FBE-454F-A868-1B9B36556F83}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

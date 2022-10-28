@@ -25,4 +25,22 @@ internal class HistoryEntry
 
     internal HistoryEntry(string sha, Instant timestamp, IReadOnlyList<FileDescriptor> fileDescriptors) =>
         (Sha, Timestamp, FileDescriptors) = (sha, timestamp, fileDescriptors);
+
+    internal IEnumerable<MessageDescriptor> GetAllMessages() =>
+        FileDescriptors.SelectMany(GetAllMessages);
+
+    private IEnumerable<MessageDescriptor> GetAllMessages(FileDescriptor file) =>
+        file.MessageTypes.SelectMany(GetAllMessages);
+
+    private IEnumerable<MessageDescriptor> GetAllMessages(MessageDescriptor message) =>
+        new[] { message }.Concat(message.NestedTypes.SelectMany(GetAllMessages));
+
+    internal IEnumerable<EnumDescriptor> GetAllEnums() =>
+        FileDescriptors.SelectMany(GetAllEnums);
+
+    private IEnumerable<EnumDescriptor> GetAllEnums(FileDescriptor fileDescriptor) =>
+        fileDescriptor.EnumTypes.Concat(fileDescriptor.MessageTypes.SelectMany(GetAllEnums));
+
+    private IEnumerable<EnumDescriptor> GetAllEnums(MessageDescriptor messageDescriptor) =>
+        messageDescriptor.EnumTypes.Concat(messageDescriptor.NestedTypes.SelectMany(GetAllEnums));
 }

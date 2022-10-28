@@ -12,9 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Google.Protobuf;
+
 namespace Google.Cloud.Tools.ApiHistoryReader;
 
 internal interface IHistoryProcessor
 {
     void ProcessHistory(IEnumerable<HistoryEntry> historyEntries);
+
+    /// <summary>
+    /// Registry containing all the extensions needed for processing. May be null,
+    /// if no extensions are needed.
+    /// </summary>
+    ExtensionRegistry ExtensionRegistry { get; }
 }

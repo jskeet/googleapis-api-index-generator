@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Google.Protobuf;
 using Google.Protobuf.Reflection;
 using Newtonsoft.Json;
 using NodaTime;
@@ -27,13 +28,15 @@ internal class EnumChangeDetector : IHistoryProcessor
     internal EnumChangeDetector(string historyDirectory) =>
         _historyDirectory = historyDirectory;
 
+    public ExtensionRegistry ExtensionRegistry => null;
+
     public void ProcessHistory(IEnumerable<HistoryEntry> historyEntries)
     {
         var enumEntries = new ConcurrentDictionary<string, EnumHistoryEntry>();
 
         foreach (var entry in historyEntries)
         {
-            foreach (var enumDefinition in GetEnumDefinitions(entry.FileDescriptors))
+            foreach (var enumDefinition in entry.GetAllEnums())
             {
                 string name = enumDefinition.FullName;
                 var count = enumDefinition.Values.Count;
@@ -64,15 +67,6 @@ internal class EnumChangeDetector : IHistoryProcessor
         Console.WriteLine($"Enums with no changes: {ordered.Count(x => x.Changes == 0)}");
         Console.WriteLine($"Enums with changes: {ordered.Count(x => x.Changes != 0)}");
     }
-
-    private IEnumerable<EnumDescriptor> GetEnumDefinitions(IReadOnlyList<FileDescriptor> fileDescriptors) =>
-        fileDescriptors.SelectMany(GetEnumDefinitions);
-
-    private IEnumerable<EnumDescriptor> GetEnumDefinitions(FileDescriptor fileDescriptor) =>
-        fileDescriptor.EnumTypes.Concat(fileDescriptor.MessageTypes.SelectMany(GetEnumDefinitions));
-
-    private IEnumerable<EnumDescriptor> GetEnumDefinitions(MessageDescriptor messageDescriptor) =>
-        messageDescriptor.EnumTypes.Concat(messageDescriptor.NestedTypes.SelectMany(GetEnumDefinitions));
 }
 
 public class EnumHistoryEntry
